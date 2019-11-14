@@ -21,7 +21,7 @@ $FirebirdConfiguration = @{
 $baseDir = Split-Path -Parent $PSCommandPath
 $testsBaseDir = "$baseDir\src\FirebirdSql.Data.FirebirdClient.Tests"
 $testsNETDir = "$testsBaseDir\bin\$Configuration\net452"
-$testsCOREDir = "$testsBaseDir\bin\$Configuration\netcoreapp2.2"
+$testsCOREDir = "$testsBaseDir\bin\$Configuration\netcoreapp3.0"
 
 $startDir = $null
 $firebirdProcess = $null
@@ -55,7 +55,7 @@ function Prepare() {
 	echo "Downloading $fbDownload"
 	(New-Object System.Net.WebClient).DownloadFile($fbDownload, (Join-Path (pwd) $fbDownloadName))
 	echo "Extracting $fbDownloadName"
-	7z x $fbDownloadName | Out-Null
+	7z x -bsp0 -bso0 $fbDownloadName
 	cp -Recurse -Force .\embedded\* $testsNETDir
 	cp -Recurse -Force .\embedded\* $testsCOREDir
 	rmdir -Recurse .\embedded
